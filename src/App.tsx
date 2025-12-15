@@ -8,6 +8,7 @@ import { ProfilePage } from './pages/ProfilePage';
 import { SkinsPage } from './pages/SkinsPage';
 import { SoundsPage } from './pages/SoundsPage';
 import { AutoSettingsPage } from './pages/AutoSettingsPage';
+import { LeaderboardPage } from './pages/LeaderboardPage';
 import { IntroPage } from './pages/IntroPage';
 
 function App() {
@@ -28,6 +29,9 @@ function App() {
           </Route>
           <Route path="/achievements" element={<MobileLayout />}>
             <Route index element={<AchievementsPage />} />
+          </Route>
+          <Route path="/leaderboard" element={<MobileLayout />}>
+            <Route index element={<LeaderboardPage />} />
           </Route>
           <Route path="/profile" element={<MobileLayout />}>
             <Route index element={<ProfilePage />} />

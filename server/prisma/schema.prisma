@@ -1,0 +1,37 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+}
+
+model User {
+  id        Int      @id @default(autoincrement())
+  deviceId  String   @unique
+  nickname  String?
+  createdAt DateTime @default(now())
+  stats     UserStats?
+  logs      MeritLog[]
+}
+
+model UserStats {
+  id         Int      @id @default(autoincrement())
+  userId     Int      @unique
+  totalMerit Int      @default(0)
+  autoMerit  Int      @default(0)
+  manualMerit Int     @default(0)
+  streakDays Int      @default(0)
+  lastActiveAt DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+  user       User     @relation(fields: [userId], references: [id])
+}
+
+model MeritLog {
+  id        Int      @id @default(autoincrement())
+  userId    Int
+  amount    Int
+  source    String   @default("manual") // "manual" or "auto"
+  createdAt DateTime @default(now())
+  user      User     @relation(fields: [userId], references: [id])
+}

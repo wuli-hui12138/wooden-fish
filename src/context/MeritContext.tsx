@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
+import { api } from '../services/api';
 
 export type Skin = 'classic' | 'gold' | 'jade' | 'crystal' | 'purple' | 'star';
 export type Sound = 'classic' | 'bell' | 'bamboo' | 'keyboard';
@@ -31,12 +32,52 @@ export const MeritProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     });
 
     const [todayMerit, setTodayMerit] = useState<number>(() => {
-        // Basic day tracking check could be added here
         const saved = localStorage.getItem('merit_today');
         return saved ? parseInt(saved, 10) : 0;
     });
 
     const [autoEnabled, setAutoEnabled] = useState(false);
+
+    // User Identity for API
+    const [userId, setUserId] = useState<number | null>(null);
+
+    // Init API login
+    useEffect(() => {
+        let deviceId = localStorage.getItem('device_id');
+        if (!deviceId) {
+            deviceId = 'dev_' + Math.random().toString(36).substr(2, 9);
+            localStorage.setItem('device_id', deviceId);
+        }
+
+        api.login(deviceId).then(res => {
+            if (res.user) {
+                setUserId(res.user.id);
+                // Sync remote stats if they are higher (simple conflict resolution)
+                if (res.user.stats) {
+                    setMerit(prev => Math.max(prev, res.user.stats.totalMerit));
+                    setTodayMerit(prev => Math.max(prev, res.user.stats.todayMerit));
+                }
+            }
+        }).catch(err => console.error("Login failed", err));
+    }, []);
+
+    // Sync to server periodically
+    useEffect(() => {
+        if (!userId) return;
+
+        const sync = () => {
+            api.sync(userId, merit, todayMerit)
+                .catch(e => console.error("Sync failed", e));
+        };
+
+        const timer = setInterval(sync, 10000); // Sync every 10s
+        window.addEventListener('beforeunload', sync); // Sync on close
+
+        return () => {
+            clearInterval(timer);
+            window.removeEventListener('beforeunload', sync);
+        };
+    }, [userId, merit, todayMerit]);
 
     const [settings, setSettings] = useState<Settings>(() => {
         const saved = localStorage.getItem('merit_settings');
@@ -65,7 +106,6 @@ export const MeritProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     const addMerit = (amount = 1) => {
         setMerit(prev => prev + amount);
         setTodayMerit(prev => prev + amount);
-        // Here we would also play sound if not silent
     };
 
     const updateSettings = (newSettings: Partial<Settings>) => {

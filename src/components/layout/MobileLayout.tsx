@@ -25,7 +25,7 @@ export const MobileLayout: React.FC = () => {
                 <nav className="h-[60px] bg-white border-t border-gray-100 flex justify-around items-center px-2 z-50">
                     <NavItem to="/home" icon={<Home size={24} />} label="首页" />
                     <NavItem to="/stats" icon={<BarChart2 size={24} />} label="统计" />
-                    <NavItem to="/achievements" icon={<Award size={24} />} label="成就" />
+                    <NavItem to="/leaderboard" icon={<Award size={24} />} label="排行" />
                     <NavItem to="/profile" icon={<User size={24} />} label="我的" />
                 </nav>
             </div>
