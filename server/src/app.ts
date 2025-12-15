@@ -7,8 +7,8 @@ import meritRoutes from './routes/merit';
 import leaderboardRoutes from './routes/leaderboard';
 
 const app = express();
-// Prisma 7.x might strictly require an options object or it's a specific environment quirk
-export const prisma = new PrismaClient({});
+// Initialize Prisma Client
+export const prisma = new PrismaClient();
 const PORT = process.env.PORT || 3000;
 
 app.use(cors());
