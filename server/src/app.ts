@@ -7,7 +7,8 @@ import meritRoutes from './routes/merit';
 import leaderboardRoutes from './routes/leaderboard';
 
 const app = express();
-const prisma = new PrismaClient();
+// Prisma 7.x might strictly require an options object or it's a specific environment quirk
+export const prisma = new PrismaClient({});
 const PORT = process.env.PORT || 3000;
 
 app.use(cors());
@@ -27,4 +28,4 @@ app.listen(PORT, () => {
     console.log(`Server is running on http://localhost:${PORT}`);
 });
 
-export { prisma };
+
