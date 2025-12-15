@@ -19,6 +19,7 @@ model UserStats {
   id         Int      @id @default(autoincrement())
   userId     Int      @unique
   totalMerit Int      @default(0)
+  todayMerit Int      @default(0)
   autoMerit  Int      @default(0)
   manualMerit Int     @default(0)
   streakDays Int      @default(0)
