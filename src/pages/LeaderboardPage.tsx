@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Award, Trophy } from 'lucide-react';
+import { Trophy } from 'lucide-react';
 import { api } from '../services/api';
 
 export const LeaderboardPage: React.FC = () => {
