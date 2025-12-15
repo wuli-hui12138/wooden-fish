@@ -3,6 +3,11 @@
 import "dotenv/config";
 import { defineConfig, env } from "prisma/config";
 
+// Ensure DATABASE_URL exists for build/generation
+if (!process.env.DATABASE_URL) {
+  process.env.DATABASE_URL = "file:./dev.db";
+}
+
 export default defineConfig({
   schema: "prisma/schema.prisma",
   migrations: {
