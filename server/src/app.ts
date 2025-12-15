@@ -8,7 +8,7 @@ import leaderboardRoutes from './routes/leaderboard';
 
 const app = express();
 // Initialize Prisma Client
-export const prisma = new PrismaClient({});
+export const prisma = new PrismaClient();
 const PORT = process.env.PORT || 3000;
 
 app.use(cors());
