@@ -91,7 +91,7 @@ export const WoodenFish: React.FC = () => {
                 <img
                     src={`/skins/${settings.skin}.png`}
                     alt="Wooden Fish"
-                    className="w-full h-full object-contain drop-shadow-2xl select-none mix-blend-multiply"
+                    className="w-full h-full object-contain drop-shadow-2xl select-none"
                     draggable={false}
                 />
             </button>

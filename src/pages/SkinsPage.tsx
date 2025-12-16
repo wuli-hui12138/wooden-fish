@@ -57,7 +57,7 @@ export const SkinsPage: React.FC = () => {
                                 <img
                                     src={`/skins/${skin.id}.png`}
                                     alt={skin.name}
-                                    className={clsx("w-3/4 h-3/4 object-contain mix-blend-multiply", skin.locked && "opacity-50")}
+                                    className={clsx("w-3/4 h-3/4 object-contain", skin.locked && "opacity-50")}
                                 />
                                 {skin.locked && (
                                     <div className="absolute inset-0 flex items-center justify-center bg-black/10 rounded-xl">

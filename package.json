@@ -9,10 +9,12 @@
     "build:all": "npm run build && cd server && npm run build",
     "install:all": "npm install && cd server && npm install",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "fix-images": "node scripts/transparent-skins.js"
   },
   "dependencies": {
     "clsx": "^2.1.1",
+    "jimp": "^1.6.0",
     "lucide-react": "^0.561.0",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
