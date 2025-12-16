@@ -20,6 +20,8 @@ interface MeritContextType {
     toggleAuto: (enabled: boolean) => void;
     settings: Settings;
     updateSettings: (newSettings: Partial<Settings>) => void;
+    user: any | null; // Placeholder for user object
+    login: (userInfo?: { nickname?: string, avatarUrl?: string }) => Promise<void>;
 }
 
 const MeritContext = createContext<MeritContextType | undefined>(undefined);
@@ -38,35 +40,42 @@ export const MeritProvider: React.FC<{ children: React.ReactNode }> = ({ childre
 
     const [autoEnabled, setAutoEnabled] = useState(false);
 
-    // User Identity for API
-    const [userId, setUserId] = useState<number | null>(null);
+    // User Identity
+    const [user, setUser] = useState<any | null>(null);
 
-    // Init API login
-    useEffect(() => {
+    const login = async (userInfo?: { nickname?: string, avatarUrl?: string }) => {
         let deviceId = localStorage.getItem('device_id');
         if (!deviceId) {
             deviceId = 'dev_' + Math.random().toString(36).substr(2, 9);
             localStorage.setItem('device_id', deviceId);
         }
 
-        api.login(deviceId).then(res => {
+        try {
+            const res = await api.login(deviceId, userInfo?.nickname, userInfo?.avatarUrl);
             if (res.user) {
-                setUserId(res.user.id);
-                // Sync remote stats if they are higher (simple conflict resolution)
+                setUser(res.user);
+                // Sync remote stats if they are higher
                 if (res.user.stats) {
                     setMerit(prev => Math.max(prev, res.user.stats.totalMerit));
                     setTodayMerit(prev => Math.max(prev, res.user.stats.todayMerit));
                 }
             }
-        }).catch(err => console.error("Login failed", err));
+        } catch (err) {
+            console.error("Login failed", err);
+        }
+    };
+
+    // Init API login on mount
+    useEffect(() => {
+        login();
     }, []);
 
     // Sync to server periodically
     useEffect(() => {
-        if (!userId) return;
+        if (!user || !user.id) return;
 
         const sync = () => {
-            api.sync(userId, merit, todayMerit)
+            api.sync(user.id, merit, todayMerit)
                 .catch(e => console.error("Sync failed", e));
         };
 
@@ -77,7 +86,7 @@ export const MeritProvider: React.FC<{ children: React.ReactNode }> = ({ childre
             clearInterval(timer);
             window.removeEventListener('beforeunload', sync);
         };
-    }, [userId, merit, todayMerit]);
+    }, [user, merit, todayMerit]);
 
     const [settings, setSettings] = useState<Settings>(() => {
         const saved = localStorage.getItem('merit_settings');
@@ -124,7 +133,9 @@ export const MeritProvider: React.FC<{ children: React.ReactNode }> = ({ childre
             autoEnabled,
             toggleAuto,
             settings,
-            updateSettings
+            updateSettings,
+            user,
+            login
         }}>
             {children}
         </MeritContext.Provider>

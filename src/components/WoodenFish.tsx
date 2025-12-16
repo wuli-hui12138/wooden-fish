@@ -88,29 +88,12 @@ export const WoodenFish: React.FC = () => {
                 className="relative z-10 w-64 h-64 transition-transform duration-100 ease-out focus:outline-none touch-manipulation"
                 style={{ transform: `scale(${scale})` }}
             >
-                {/* SVG Representation of Wooden Fish */}
-                <svg viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-full drop-shadow-2xl">
-                    {/* Body */}
-                    <path d="M40 100 
-                             C 40 40, 160 40, 160 100 
-                             C 160 160, 40 160, 40 100"
-                        fill="#333" />
-                    {/* Just a placeholder shape, will refine to look like the image later or use an image */}
-
-                    {/* Better Shape */}
-                    <path d="M20 100 
-                             C 20 20, 180 20, 180 100
-                             C 180 160, 100 180, 100 180
-                             C 100 180, 20 160, 20 100"
-                        fill={settings.skin === 'gold' ? '#FCD34D' : '#e2e8f0'}
-                        className={clsx("transition-colors", settings.skin === 'classic' ? 'fill-stone-800' :
-                            settings.skin === 'gold' ? 'fill-yellow-400' : 'fill-stone-800')}
-                    />
-
-                    {/* Detail Lines (The mouth/slit) */}
-                    <path d="M50 100 H 150" stroke="rgba(0,0,0,0.2)" strokeWidth="8" strokeLinecap="round" />
-                    <circle cx="100" cy="70" r="10" fill="rgba(0,0,0,0.2)" />
-                </svg>
+                <img
+                    src={`/skins/${settings.skin}.png`}
+                    alt="Wooden Fish"
+                    className="w-full h-full object-contain drop-shadow-2xl select-none"
+                    draggable={false}
+                />
             </button>
             <style>{`
                 @keyframes float-up {

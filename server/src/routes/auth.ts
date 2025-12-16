@@ -3,10 +3,10 @@ import { prisma } from '../app';
 
 const router = Router();
 
-// Register or Login a user by Device ID
+// Register or Login a user by Device ID (and optionally OpenID/UserInfo for WeChat)
 router.post('/login', async (req, res) => {
     try {
-        const { deviceId, nickname } = req.body;
+        const { deviceId, nickname, avatarUrl, openid } = req.body;
 
         if (!deviceId) {
             res.status(400).json({ error: 'Device ID is required' });
@@ -23,7 +23,9 @@ router.post('/login', async (req, res) => {
             user = await prisma.user.create({
                 data: {
                     deviceId,
+                    openid,
                     nickname: nickname || `User-${deviceId.slice(0, 6)}`,
+                    avatarUrl,
                     stats: {
                         create: {
                             totalMerit: 0,
@@ -33,6 +35,19 @@ router.post('/login', async (req, res) => {
                 },
                 include: { stats: true }
             });
+        } else {
+            // Update user info if provided (e.g., fetching latest WeChat info)
+            if (nickname || avatarUrl || openid) {
+                user = await prisma.user.update({
+                    where: { id: user.id },
+                    data: {
+                        ...(nickname && { nickname }),
+                        ...(avatarUrl && { avatarUrl }),
+                        ...(openid && { openid }),
+                    },
+                    include: { stats: true }
+                });
+            }
         }
 
         res.json({ user });

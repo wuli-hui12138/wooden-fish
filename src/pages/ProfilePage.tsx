@@ -9,9 +9,19 @@ import { useMerit } from '../context/MeritContext';
 import { clsx } from 'clsx';
 
 export const ProfilePage: React.FC = () => {
-    const { merit } = useMerit();
+    const { merit, user, login } = useMerit();
     const level = Math.floor(merit / 100) + 1;
     const progress = (merit % 100);
+
+    const handleMockLogin = async () => {
+        // Mock WeChat Login Data
+        const mockWeChatUser = {
+            nickname: `WeChatUser_${Math.floor(Math.random() * 1000)}`,
+            avatarUrl: `https://api.dicebear.com/7.x/avataaars/svg?seed=${Date.now()}` // Random avatar
+        };
+        await login(mockWeChatUser);
+        alert('模拟微信登录成功！');
+    };
 
     return (
         <div className="bg-slate-50 min-h-full pb-24">
@@ -19,11 +29,24 @@ export const ProfilePage: React.FC = () => {
             <div className="bg-indigo-600 text-white p-6 pt-10 pb-16 rounded-b-[2.5rem] shadow-xl shadow-indigo-200">
                 <div className="flex items-center gap-4">
                     <div className="w-16 h-16 rounded-full bg-white/20 border-2 border-white/30 flex items-center justify-center overflow-hidden">
-                        <User size={32} className="text-white/80" />
+                        {user?.avatarUrl ? (
+                            <img src={user.avatarUrl} alt="avatar" className="w-full h-full object-cover" />
+                        ) : (
+                            <User size={32} className="text-white/80" />
+                        )}
                     </div>
-    // ... rest of the file ... wait, I need to provide full content for write_to_file
                     <div className="flex-1">
-                        <h2 className="text-xl font-bold">心安用户</h2>
+                        <div className="flex items-center justify-between">
+                            <h2 className="text-xl font-bold">{user?.nickname || '心安用户'}</h2>
+                            {!user?.avatarUrl && (
+                                <button
+                                    onClick={handleMockLogin}
+                                    className="text-xs bg-indigo-500 hover:bg-indigo-400 px-3 py-1.5 rounded-full transition-colors"
+                                >
+                                    模拟登录
+                                </button>
+                            )}
+                        </div>
                         <div className="flex items-center gap-2 mt-1">
                             <span className="text-xs bg-indigo-500/50 px-2 py-0.5 rounded-full">禅修等级: {level}级</span>
                         </div>

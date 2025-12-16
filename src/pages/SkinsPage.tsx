@@ -53,9 +53,16 @@ export const SkinsPage: React.FC = () => {
                             )}
 
                             {/* Preview Area */}
-                            <div className={clsx("w-full aspect-square rounded-xl mb-2 flex items-center justify-center", skin.color)}>
-                                {skin.locked ? <Lock className="text-gray-400" /> : (
-                                    <div className={clsx("font-bold text-xs", skin.text)}>Preview</div>
+                            <div className={clsx("w-full aspect-square rounded-xl mb-2 flex items-center justify-center overflow-hidden", skin.color)}>
+                                <img 
+                                    src={`/skins/${skin.id}.png`} 
+                                    alt={skin.name}
+                                    className={clsx("w-3/4 h-3/4 object-contain", skin.locked && "opacity-50")}
+                                />
+                                {skin.locked && (
+                                    <div className="absolute inset-0 flex items-center justify-center bg-black/10 rounded-xl">
+                                        <Lock className="text-gray-500" />
+                                    </div>
                                 )}
                             </div>
 

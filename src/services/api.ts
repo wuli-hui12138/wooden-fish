@@ -11,11 +11,11 @@ export interface User {
 }
 
 export const api = {
-    login: async (deviceId: string, nickname?: string) => {
+    login: async (deviceId: string, nickname?: string, avatarUrl?: string) => {
         const res = await fetch(`${API_URL}/auth/login`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ deviceId, nickname })
+            body: JSON.stringify({ deviceId, nickname, avatarUrl })
         });
         return res.json();
     },
