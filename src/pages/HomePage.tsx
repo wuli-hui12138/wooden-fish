@@ -24,7 +24,7 @@ export const HomePage: React.FC = () => {
     }, [autoEnabled, addMerit]);
 
     return (
-        <div className="h-full flex flex-col bg-indigo-600 text-white relative">
+        <div className="h-full flex flex-col bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-slate-800 via-slate-900 to-black text-white relative overflow-hidden">
             {/* Header Section */}
             <div className="p-6 pt-10 flex justify-between items-start">
                 <div className="flex flex-col gap-4 w-full">
@@ -56,7 +56,9 @@ export const HomePage: React.FC = () => {
             {/* Main Content (Fish) */}
             <div className="flex-1 flex flex-col items-center justify-center relative">
                 {/* Center Glow Effect */}
-                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-white/5 rounded-full blur-3xl" />
+                {/* Center Glow Effect */}
+                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-80 h-80 bg-indigo-500/10 rounded-full blur-[100px]" />
+                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-40 h-40 bg-amber-500/5 rounded-full blur-[50px]" />
 
                 <WoodenFish />
 
