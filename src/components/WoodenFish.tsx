@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 
+import { TransparentImage } from './common/TransparentImage';
 import { useMerit } from '../context/MeritContext';
+
 
 // Simple Audio Context for "Knock" sound
 // Using a synthesized sound for now to avoid external assets initially
@@ -88,7 +90,7 @@ export const WoodenFish: React.FC = () => {
                 className="relative z-10 w-64 h-64 transition-transform duration-100 ease-out focus:outline-none touch-manipulation"
                 style={{ transform: `scale(${scale})` }}
             >
-                <img
+                <TransparentImage
                     src={`/skins/${settings.skin}.png`}
                     alt="Wooden Fish"
                     className="w-full h-full object-contain drop-shadow-2xl select-none"

@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { ArrowLeft, Check, Lock } from 'lucide-react';
 import { useMerit, type Skin } from '../context/MeritContext';
 import { clsx } from 'clsx';
+import { TransparentImage } from '../components/common/TransparentImage';
 
 const skins: { id: Skin; name: string; desc: string; color: string; text: string; locked?: boolean }[] = [
     { id: 'classic', name: '传统木鱼', desc: '经典厚重质感', color: 'bg-stone-100', text: 'text-stone-600' },
@@ -54,7 +55,7 @@ export const SkinsPage: React.FC = () => {
 
                             {/* Preview Area */}
                             <div className={clsx("w-full aspect-square rounded-xl mb-2 flex items-center justify-center overflow-hidden", skin.color)}>
-                                <img
+                                <TransparentImage
                                     src={`/skins/${skin.id}.png`}
                                     alt={skin.name}
                                     className={clsx("w-3/4 h-3/4 object-contain", skin.locked && "opacity-50")}
