@@ -19,7 +19,6 @@ export const SkinsPage: React.FC = () => {
     const { settings, updateSettings } = useMerit();
 
     return (
-    return (
         <div className="min-h-screen bg-slate-900 flex flex-col text-slate-100">
             {/* Header */}
             <div className="bg-slate-900 px-4 py-4 flex items-center shadow-sm shadow-black/20 sticky top-0 z-10 border-b border-slate-800">

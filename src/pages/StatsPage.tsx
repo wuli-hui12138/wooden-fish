@@ -8,7 +8,6 @@ export const StatsPage: React.FC = () => {
     const [period, setPeriod] = useState<'day' | 'week' | 'total'>('day');
 
     return (
-    return (
         <div className="bg-slate-900 min-h-full pb-20 text-slate-100">
             {/* Header */}
             <header className="bg-slate-800 p-6 pb-20 rounded-b-3xl shadow-lg shadow-black/20">

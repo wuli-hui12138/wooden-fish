@@ -24,7 +24,6 @@ export const ProfilePage: React.FC = () => {
     };
 
     return (
-    return (
         <div className="bg-slate-900 min-h-full pb-24 text-slate-100">
             {/* Header Profile Card */}
             <div className="bg-slate-800 p-6 pt-10 pb-16 rounded-b-[2.5rem] shadow-xl shadow-black/20">
