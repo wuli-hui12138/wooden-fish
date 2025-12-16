@@ -19,16 +19,17 @@ export const SkinsPage: React.FC = () => {
     const { settings, updateSettings } = useMerit();
 
     return (
-        <div className="min-h-screen bg-neutral-50 flex flex-col">
+    return (
+        <div className="min-h-screen bg-slate-900 flex flex-col text-slate-100">
             {/* Header */}
-            <div className="bg-white px-4 py-4 flex items-center shadow-sm sticky top-0 z-10">
+            <div className="bg-slate-900 px-4 py-4 flex items-center shadow-sm shadow-black/20 sticky top-0 z-10 border-b border-slate-800">
                 <button
                     onClick={() => navigate(-1)}
-                    className="p-2 -ml-2 text-gray-600 hover:bg-gray-100 rounded-full"
+                    className="p-2 -ml-2 text-slate-400 hover:bg-slate-800 rounded-full"
                 >
                     <ArrowLeft size={24} />
                 </button>
-                <h1 className="flex-1 text-center text-lg font-bold pr-10">木鱼皮肤</h1>
+                <h1 className="flex-1 text-center text-lg font-bold pr-10 text-slate-100">木鱼皮肤</h1>
             </div>
 
             {/* Grid */}
@@ -42,35 +43,35 @@ export const SkinsPage: React.FC = () => {
                             onClick={() => !skin.locked && updateSettings({ skin: skin.id })}
                             className={clsx(
                                 "relative aspect-[4/5] rounded-2xl p-4 flex flex-col items-center justify-between transition-all border-2",
-                                isActive ? "border-indigo-600 bg-white ring-2 ring-indigo-100" : "border-transparent bg-white hover:bg-gray-50",
-                                skin.locked && "opacity-70 grayscale"
+                                isActive ? "border-indigo-500 bg-slate-800 ring-2 ring-indigo-500/20" : "border-transparent bg-slate-800 hover:bg-slate-750",
+                                skin.locked && "opacity-60"
                             )}
                         >
                             {/* Checkmark */}
                             {isActive && (
-                                <div className="absolute top-3 right-3 w-6 h-6 bg-indigo-600 rounded-full flex items-center justify-center text-white">
+                                <div className="absolute top-3 right-3 w-6 h-6 bg-indigo-500 rounded-full flex items-center justify-center text-white">
                                     <Check size={14} strokeWidth={3} />
                                 </div>
                             )}
 
-                            {/* Preview Area */}
-                            <div className={clsx("w-full aspect-square rounded-xl mb-2 flex items-center justify-center overflow-hidden", skin.color)}>
+                            {/* Preview Area - Adjusted background colors for dark mode */}
+                            <div className={clsx("w-full aspect-square rounded-xl mb-2 flex items-center justify-center overflow-hidden bg-slate-700/50")}>
                                 <TransparentImage
                                     src={`/skins/${skin.id}.png`}
                                     alt={skin.name}
                                     className={clsx("w-3/4 h-3/4 object-contain", skin.locked && "opacity-50")}
                                 />
                                 {skin.locked && (
-                                    <div className="absolute inset-0 flex items-center justify-center bg-black/10 rounded-xl">
-                                        <Lock className="text-gray-500" />
+                                    <div className="absolute inset-0 flex items-center justify-center bg-black/40 rounded-xl">
+                                        <Lock className="text-slate-400" />
                                     </div>
                                 )}
                             </div>
 
                             {/* Info */}
                             <div className="text-center">
-                                <div className="font-bold text-gray-800 text-sm">{skin.name}</div>
-                                <div className="text-[10px] text-gray-400 mt-1">{skin.desc}</div>
+                                <div className="font-bold text-slate-200 text-sm">{skin.name}</div>
+                                <div className="text-[10px] text-slate-400 mt-1">{skin.desc}</div>
                             </div>
                         </button>
                     );
