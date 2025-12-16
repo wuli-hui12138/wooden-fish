@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { clsx } from 'clsx';
+
 import { useMerit } from '../context/MeritContext';
 
 // Simple Audio Context for "Knock" sound
