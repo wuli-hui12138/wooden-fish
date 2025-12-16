@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc -b && vite build",
+    "build": "tsc -b && node build-safe.js",
     "build:all": "npm run build && cd server && npm run build",
     "install:all": "npm install && cd server && npm install",
     "lint": "eslint .",
